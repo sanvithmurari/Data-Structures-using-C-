@@ -39,10 +39,7 @@ class Stack{
     bool isEmpty(){
         return top==-1;
     }
-
-    ~Stack(){
-        delete[] arr;
-    }
+    
 };
 
 int main(){
