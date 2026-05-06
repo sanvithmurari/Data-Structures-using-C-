@@ -1,76 +1,90 @@
 #include<iostream>
 using namespace std;
 class Queue{
-    private:
-        int front;
-        int rear;
-        int size;
-        int *queue;
-    public:
-        Queue(int c){
-            front = rear = 0;
-            size = c;
-            queue = new int[size];
-        }
+    int front,rear,size;
+    int *queue;
+    public: 
+    Queue(){
+        size=100;
+        queue=new int(size);
+        front=rear=-1;
+    }
 
-        void enqueue(int data){
-            if(rear == size){
-                cout<<"Queue is full"<<endl;
-                return;
-            }
-            queue[rear] = data;
-            rear++;
-        }
+    bool isEmpty(){
+        return front==-1 || front>rear;
+    }
 
-        void dequeue(){
-            if(front == rear){
-                cout<<"Queue is empty"<<endl;
-                return;
-            }
-            for(int i=0; i<rear-1; i++){
-                queue[i] = queue[i+1];
-            }
-            rear--;
+    void enqueue(int val){
+        if(rear==size-1){
+            cout<<"Queue Overflow: Queue is full!\n";
+            return;
         }
+        if(isEmpty()){
+            front=0;
+        }
+        rear++;
+        queue[rear]=val;
+    }
 
-        void display(){
-            if(front == rear){
-                cout<<"Queue is empty"<<endl;
-                return;
-            }
-            for(int i=front; i<rear; i++){
-                cout<<queue[i]<<" ";
-            }
-            cout<<endl;
+    void dequeue(){
+        if(isEmpty()){
+            cout<<"Queue underflow: Queue is empty!\n";
+            return;
         }
+        front++;
+        if(front>rear){
+            front=rear=-1;
+        }
+    }
+
+    int peak(){
+        return queue[front];
+    }
+
+    void display(){
+        if(isEmpty()){
+            cout<<"Queue is empty!\n";
+            return;
+        }
+        cout<<"QUEUE ELEMENTS: ";
+        for(int i=front;i<=rear;i++){
+            cout<<queue[i]<<" ";
+        }
+        cout<<endl;
+    }
 };
 
-int main(){
-    int choice, data,size;
-    cout<<"Enter the size of the queue: ";
-    cin>>size;
-    Queue q(size);
+int main(){ 
+    Queue q;
+    int choice,value;
+    cout<<"1. Enqueue\n2. Dequeue\n3. Peak\n4. Display\n5. Exit\n";
     do{
-        cout<<"1. Enqueue\n2. Dequeue\n3. Display\n4. Exit\nEnter your choice: ";
+        cout<<"Enter your choice: ";
         cin>>choice;
         switch(choice){
             case 1:
-                cout<<"Enter data to enqueue: ";
-                cin>>data;
-                q.enqueue(data);
+                cout<<"Enter value to enqueue: ";
+                cin>>value;
+                q.enqueue(value);
                 break;
             case 2:
                 q.dequeue();
                 break;
             case 3:
-                q.display();
+                if(!q.isEmpty()){
+                    cout<<"Front element: "<<q.peak()<<endl;
+                } else {
+                    cout<<"Queue is empty!\n";
+                }
                 break;
             case 4:
-                cout<<"Exiting..."<<endl;
+                q.display();
+                break;
+            case 5:
+                cout<<"Exiting...\n";
                 break;
             default:
-                cout<<"Invalid choice"<<endl;
+                cout<<"Invalid choice! Please try again.\n";
         }
-    }while(choice!=4);
-    return 0;
+    } while(choice!=5); 
 }
