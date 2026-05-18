@@ -63,7 +63,7 @@ class Browser{
                 cout << "No pages open now.\n";
             }
         }
-        return ;
+        
         stack<string> temp;
         bool found = false;
 
@@ -110,6 +110,17 @@ class Browser{
         }
     }
 
+    void show_history(){
+        if(history.empty()){
+        cout << "No browsing history available!\n";
+        return;
+        }
+        cout << "\n===== Browsing History =====\n";
+        for(int i = 0; i < history.size(); i++){
+        cout << i + 1 << ". " << history[i] << endl;
+        }
+    }
+
     void clear_history(){
         while(!back.empty()){
             back.pop();
@@ -136,12 +147,13 @@ int main() {
         cout << "2. Go Back\n";
         cout << "3. Go Front\n";
         cout << "4. Close Page\n";
-        cout << "5. Clear Browser History\n";
-        cout << "6. Exit\n";
+        cout << "5. Show Browser History\n";
+        cout << "6. Clear Browser History\n";
+        cout << "7. Exit\n";
         cout << "==================================\n";
         
         // 2nd: Take input choice from the user
-        cout << "Enter your choice (1-6): ";
+        cout << "Enter your choice (1-7): ";
         cin >> choice;
 
         // Run through switch cases based on user input
@@ -166,12 +178,16 @@ int main() {
                 cin >> pageName;
                 myBrowser.close_page(pageName);
                 break;
-                
+            
             case 5:
+                myBrowser.show_history();
+                break;
+
+            case 6:
                 myBrowser.clear_history();
                 break;
                 
-            case 6:
+            case 7:
                 cout << "Exiting the browser...\n";
                 break;
                 
